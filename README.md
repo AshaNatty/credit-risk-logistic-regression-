@@ -99,5 +99,36 @@ This aligns with **business-driven evaluation**, where risk probabilities matter
 
 ---
 
-## 📁 Project Structure
+## Project Structure
+credit-risk-logistic-regression/
+│
+├── data/
+│ └── README.md # Dataset source and download instructions
+│
+├── notebooks/
+│ └── credit_risk_analysis.ipynb
+│
+├── src/
+│ └── train_model.py
+│
+├── requirements.txt
+└── README.md
+
+
+---
+
+## How to Run the Project
+
+1. Clone the repository
+```bash
+git clone https://github.com/your-username/credit-risk-logistic-regression.git
+
+2. Install dependencies
+pip install -r requirements.txt
+3.Run the training script
+python src/train_model.py
+Or explore the notebook:
+jupyter notebook notebooks/credit_risk_analysis.ipynb
+
+
 
