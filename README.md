@@ -120,18 +120,13 @@ credit-risk-logistic-regression/
 ## How to Run the Project
 
 1. Clone the repository
-```bash
 git clone https://github.com/your-username/credit-risk-logistic-regression.git
 
 
 2. Install dependencies
-
-```bash
 pip install -r requirements.txt
 
 3.Run the training script
-
-```bash
 python src/train_model.py
 
 
