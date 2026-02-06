@@ -122,16 +122,18 @@ credit-risk-logistic-regression/
 1. Clone the repository
 ```bash
 git clone https://github.com/your-username/credit-risk-logistic-regression.git
-```bash
+
 
 2. Install dependencies
+
 ```bash
 pip install -r requirements.txt
-```bash
+
 3.Run the training script
+
 ```bash
 python src/train_model.py
-```bash
+
 
 Or explore the notebook:
 jupyter notebook notebooks/credit_risk_analysis.ipynb
