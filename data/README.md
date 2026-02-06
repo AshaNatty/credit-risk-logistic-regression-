@@ -4,20 +4,20 @@ This project uses a real-world banking dataset for **credit default prediction**
 
 ---
 
-## 📊 Dataset Name
+## Dataset Name
 
 **Default of Credit Card Clients Dataset**
 
 ---
 
-## 🔗 Source
+## Source
 
 UCI Machine Learning Repository  
 https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients
 
 ---
 
-## 🏦 Description
+## Description
 
 The dataset contains information on **30,000 credit card customers**, including:
 
@@ -46,7 +46,7 @@ In the project code, this column is renamed to `default` for clarity.
 
 1. Download the dataset from the UCI repository
 2. The file name will be:
-3. 3. Place the file inside this directory:
+3. Place the file inside this directory:
 
  **Do NOT rename the file**, as the training script expects this exact name.
 
