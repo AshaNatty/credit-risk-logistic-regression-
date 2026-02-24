@@ -25,8 +25,8 @@ class Settings(BaseSettings):
 
     # Risk thresholds
     risk_score_low: float = 0.3
-    risk_score_medium: float = 0.6
-    risk_score_high: float = 0.8
+    risk_score_medium: float = 0.55
+    risk_score_high: float = 0.75
 
 
 settings = Settings()

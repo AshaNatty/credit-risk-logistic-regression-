@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from enum import Enum
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field
 import uuid
 
 
@@ -32,11 +32,6 @@ class LoanRequest(BaseModel):
     credit_score: int = Field(..., ge=300, le=850, description="FICO credit score")
     employment_years: float = Field(..., ge=0, description="Years of employment")
     loan_purpose: LoanPurpose = Field(..., description="Purpose of the loan")
-
-    @field_validator("monthly_debt")
-    @classmethod
-    def validate_monthly_debt(cls, v: float, info: Any) -> float:
-        return v
 
 
 class AmortizationEntry(BaseModel):

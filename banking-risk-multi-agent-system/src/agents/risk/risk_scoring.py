@@ -143,10 +143,11 @@ class RiskScoringAgent:
 
     @staticmethod
     def _classify_risk(score: float) -> RiskLevel:
-        if score < 0.30:
+        from src.utils.config import settings
+        if score < settings.risk_score_low:
             return RiskLevel.LOW
-        if score < 0.55:
+        if score < settings.risk_score_medium:
             return RiskLevel.MEDIUM
-        if score < 0.75:
+        if score < settings.risk_score_high:
             return RiskLevel.HIGH
         return RiskLevel.CRITICAL

@@ -6,7 +6,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY banking-risk-multi-agent-system/src ./src
-COPY banking-risk-multi-agent-system/src/api ./src/api
 
 ENV PYTHONPATH=/app
 

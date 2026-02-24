@@ -19,8 +19,9 @@ class StructuredFormatter(logging.Formatter):
         }
         if record.exc_info:
             log_entry["exception"] = self.formatException(record.exc_info)
-        if hasattr(record, "extra"):
-            log_entry.update(record.extra)
+        extra = getattr(record, "extra", None)
+        if extra and isinstance(extra, dict):
+            log_entry.update(extra)
         return json.dumps(log_entry)
 
 

@@ -68,13 +68,14 @@ _POLICY_CORPUS = [
 class ChromaVectorStoreStub:
     """Stub implementation of Chroma vector store for policy retrieval."""
 
-    def __init__(self, persist_dir: str = "data/chroma", collection: str = "policy_documents"):
-        self._persist_dir = persist_dir
-        self._collection = collection
+    def __init__(self, persist_dir: str | None = None, collection: str | None = None):
+        from src.utils.config import settings
+        self._persist_dir = persist_dir or settings.chroma_persist_dir
+        self._collection = collection or settings.chroma_collection
         logger.info(
             "ChromaVectorStoreStub initialised (persist_dir=%s, collection=%s)",
-            persist_dir,
-            collection,
+            self._persist_dir,
+            self._collection,
         )
 
     def similarity_search(self, query: str, top_k: int = 3) -> List[dict]:
