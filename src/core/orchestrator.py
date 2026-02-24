@@ -33,7 +33,7 @@ class Orchestrator:
 
         logger.info(
             "orchestrator_setup_complete",
-            extra={"registered_count": len(self.registry._agents)},
+            extra={"registered_count": self.registry.count()},
         )
 
     async def teardown(self) -> None:

@@ -15,6 +15,6 @@ class Settings(BaseSettings):
     max_agents: int = 50
     task_timeout_seconds: float = 30.0
     short_term_memory_max_size: int = 1000
-    long_term_memory_path: str = "/tmp/agent_long_term_memory.json"
+    long_term_memory_path: str = "./data/agent_long_term_memory.json"
     chroma_collection_name: str = "agent_knowledge"
     prometheus_port: int = 9090

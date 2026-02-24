@@ -47,7 +47,7 @@ class CoordinatorAgent(BaseAgent):
                 agent_id=self.agent_id,
                 message_id=message.message_id,
                 success=True,
-                payload={"status": "ok", "registered_agents": len(self._registry._agents)},
+                payload={"status": "ok", "registered_agents": self._registry.count()},
             )
         else:
             return AgentResponse(

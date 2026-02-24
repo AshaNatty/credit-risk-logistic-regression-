@@ -15,7 +15,7 @@ class LongTermMemory(BaseMemory):
     (e.g., Redis, Postgres, DynamoDB) in production.
     """
 
-    def __init__(self, storage_path: str = "/tmp/agent_long_term_memory.json") -> None:
+    def __init__(self, storage_path: str = "./data/agent_long_term_memory.json") -> None:
         self._path = Path(storage_path)
         self._lock = asyncio.Lock()
         if not self._path.exists():

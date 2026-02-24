@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field, field_serializer
 
 
 class MessageType(str, Enum):
@@ -21,6 +21,8 @@ class MessageType(str, Enum):
 class A2AMessage(BaseModel):
     """Envelope for all inter-agent communication."""
 
+    model_config = ConfigDict()
+
     message_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     sender_id: str
     recipient_id: Optional[str] = None
@@ -30,11 +32,15 @@ class A2AMessage(BaseModel):
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     ttl_seconds: int = Field(default=60, ge=1)
 
-    model_config = {"json_encoders": {datetime: lambda v: v.isoformat()}}
+    @field_serializer("timestamp")
+    def serialize_timestamp(self, v: datetime) -> str:
+        return v.isoformat()
 
 
 class AgentResponse(BaseModel):
     """Standardised response envelope returned by every agent handler."""
+
+    model_config = ConfigDict()
 
     agent_id: str
     message_id: str
@@ -43,4 +49,6 @@ class AgentResponse(BaseModel):
     error: Optional[str] = None
     timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
-    model_config = {"json_encoders": {datetime: lambda v: v.isoformat()}}
+    @field_serializer("timestamp")
+    def serialize_timestamp(self, v: datetime) -> str:
+        return v.isoformat()

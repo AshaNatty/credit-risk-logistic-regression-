@@ -44,6 +44,10 @@ class AgentRegistry:
     def get_by_type(self, agent_type: str) -> list[BaseAgent]:
         return [a for a in self._agents.values() if a.agent_type == agent_type]
 
+    def count(self) -> int:
+        """Return the number of currently registered agents."""
+        return len(self._agents)
+
     def list_agents(self) -> list[dict]:
         return [
             {
