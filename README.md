@@ -1,3 +1,116 @@
+# Banking Risk Multi-Agent System
+
+> **Production-ready multi-agent loan risk assessment engine** — combines rule-based and ML-inspired scoring with policy retrieval (RAG) and a full compliance audit trail.
+
+## Architecture
+
+```
+                         ┌─────────────────────────────────────────────┐
+  POST /api/v1/assess ──►│            CoordinatorAgent                 │
+                         │  (orchestrates pipeline, caches in Redis)   │
+                         └────────────┬────────────────────────────────┘
+                                      │ spawns
+              ┌───────────────────────┼──────────────────────┐
+              ▼                       ▼                      ▼
+  ┌───────────────────┐  ┌─────────────────────┐  ┌──────────────────────┐
+  │ CustomerIntent    │  │  RiskScoringAgent   │  │ PolicyValidation     │
+  │ Agent             │  │  • DTI ratio        │  │ Agent (RAG)          │
+  │ • Purpose risk    │  │  • Credit score     │  │ • ChromaDB stub      │
+  │ • Risk indicators │  │  • Amortization     │  │ • 5 policy clauses   │
+  │ • Confidence      │  │  • Risk level       │  │ • Compliance check   │
+  └───────────────────┘  └─────────────────────┘  └──────────────────────┘
+                                      │
+                                      ▼
+                         ┌─────────────────────────┐
+                         │  ComplianceAuditAgent   │
+                         │  • Reasoning trace      │
+                         │  • Audit report         │
+                         │  • Recommendations      │
+                         │  • SQLite persistence   │
+                         └─────────────────────────┘
+```
+
+**Memory layers:**
+- 🔴 **Redis** — short-term session cache (TTL 1 h, in-memory fallback)
+- 🗄️  **SQLite** — long-term audit log & assessment history
+
+## Quick Start
+
+```bash
+cd banking-risk-multi-agent-system
+pip install -r requirements.txt
+uvicorn src.api.main:app --reload
+```
+
+### Example API call
+
+```bash
+curl -X POST http://localhost:8000/api/v1/assess \
+  -H "Content-Type: application/json" \
+  -d '{
+    "customer_id": "CUST-001",
+    "annual_income": 80000,
+    "monthly_debt": 800,
+    "loan_amount": 200000,
+    "loan_term_months": 360,
+    "interest_rate": 5.5,
+    "credit_score": 720,
+    "employment_years": 5.0,
+    "loan_purpose": "home"
+  }'
+```
+
+### Example JSON response (abbreviated)
+
+```json
+{
+  "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  "customer_id": "CUST-001",
+  "decision": "approved",
+  "customer_intent": {
+    "intent_summary": "Customer CUST-001 is requesting a $200,000 Home loan over 360 months at 5.5% APR. No significant risk indicators detected.",
+    "risk_indicators": [],
+    "confidence_score": 0.65
+  },
+  "risk_scoring": {
+    "debt_to_income_ratio": 0.12,
+    "monthly_payment": 1135.58,
+    "risk_score": 0.2891,
+    "risk_level": "low",
+    "total_interest": 208808.8,
+    "total_cost": 408808.8
+  },
+  "policy_validation": {
+    "is_compliant": true,
+    "validation_notes": "All policy checks passed.",
+    "grounded_assessment": "Based on retrieved policy clauses [POL-004, POL-001, POL-003], the application is compliant..."
+  },
+  "compliance_audit": {
+    "audit_id": "a1b2c3d4-...",
+    "is_approved": true,
+    "recommendations": ["Application meets all standard criteria. Proceed with standard processing."]
+  },
+  "processing_time_ms": 3.41
+}
+```
+
+## Run Tests
+
+```bash
+cd banking-risk-multi-agent-system
+pip install -r requirements.txt -r requirements-dev.txt
+pytest tests/ -v
+```
+
+## Docker
+
+```bash
+cd banking-risk-multi-agent-system
+docker compose -f docker/docker-compose.yml up --build
+```
+
+---
+
 # Credit Risk Prediction using Logistic Regression
 
 This project demonstrates an end-to-end **Logistic Regression** pipeline to predict **credit card default risk** using a real-world banking dataset.  
